@@ -1,0 +1,77 @@
+$(function() {
+   //single book
+   $('#mybook').booklet({
+     closed: true,
+     covers: true,
+     menu: '#custom-menu',
+     pageSelector: true,
+     chapterSelector: true,
+     arrows: true,
+     padding: 0,
+     pagePadding: 0,
+     width: '600',
+     height: '400',
+     pageNumbers: false
+       
+   });
+   //multiple books with ID's
+    $('#mybook1, #mybook2').booklet();
+   //multiple books with a class
+    $('.mycustombooks').booklet();
+    });
+
+var divdbl = $( "img:first" );
+divdbl.dblclick(function() {
+  divdbl.toggleClass( "zoom" );
+    if($("img:first").hasClass("zoom"))
+       {
+       $("#mybook").booklet("option","height",300)
+       $("#mybook").booklet("option","width",500);
+       }
+       else
+       {
+       $("#mybook").booklet("option","height",300);
+       $("#mybook").booklet("option","width",500);
+       }
+});
+
+
+
+
+
+var clicking = false;
+var previousX;
+var previousY;
+
+$("#someid").mousedown(function(e) {
+    e.preventDefault();
+    previousX = e.clientX;
+    previousY = e.clientY;
+    clicking = true;
+});
+
+$(document).mouseup(function() {
+      
+    clicking = false;
+});
+
+$("#someid").mousemove(function(e) {
+
+    if (clicking) {
+        e.preventDefault();
+        var directionX = (previousX - e.clientX) > 0 ? 1 : -1;
+        var directionY = (previousY - e.clientY) > 0 ? 1 : -1;
+        //$("#mybook").scrollLeft($("#mybook").scrollLeft() + 10 * directionX);
+        //$("#mybook").scrollTop($("#mybook").scrollTop() + 10 * directionY);
+        $("#someid").scrollLeft($("#someid").scrollLeft() + (previousX - e.clientX));
+        $("#someid").scrollTop($("#someid").scrollTop() + (previousY - e.clientY));
+        previousX = e.clientX;
+        previousY = e.clientY;
+    }
+});
+
+
+
+$("#someid").mouseleave(function(e) {
+    clicking = false;
+});
